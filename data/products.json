@@ -1,0 +1,692 @@
+[
+  {
+    "id": "laptop-lenovo-thinkpad-e14",
+    "name": "Laptop Lenovo ThinkPad E14",
+    "description": "Portátil profesional de 14 pulgadas con procesador Intel Core i5, ideal para oficina y programación.",
+    "category": "Electrónica",
+    "subcategories": [
+      "Portátiles"
+    ],
+    "location": "Madrid",
+    "price": 799.99,
+    "popularity": 8,
+    "created_at": "2023-07-01T09:00:00.000Z"
+  },
+  {
+    "id": "laptop-dell-xps-13",
+    "name": "Laptop Dell XPS 13",
+    "description": "Ultrabook compacto con pantalla InfinityEdge, batería de larga duración y chasis de aluminio.",
+    "category": "Electrónica",
+    "subcategories": [
+      "Portátiles"
+    ],
+    "location": "Barcelona",
+    "price": 1299,
+    "popularity": 37,
+    "created_at": "2025-01-02T09:00:00.000Z"
+  },
+  {
+    "id": "laptop-hp-pavilion-15",
+    "name": "Laptop HP Pavilion 15",
+    "description": "Portátil versátil de 15.6 pulgadas orientado a estudiantes, con buena relación calidad-precio.",
+    "category": "Electrónica",
+    "subcategories": [
+      "Portátiles"
+    ],
+    "location": "Valencia",
+    "price": 649.5,
+    "popularity": 67,
+    "created_at": "2023-10-04T09:00:00.000Z"
+  },
+  {
+    "id": "laptop-asus-zenbook-14",
+    "name": "Laptop Asus ZenBook 14",
+    "description": "Portátil ultraligero con pantalla OLED y acabado premium en aluminio cepillado.",
+    "category": "Electrónica",
+    "subcategories": [
+      "Portátiles"
+    ],
+    "location": "Sevilla",
+    "price": 999.99,
+    "popularity": 96,
+    "created_at": "2025-04-07T09:00:00.000Z"
+  },
+  {
+    "id": "laptop-apple-macbook-air-m2",
+    "name": "Laptop Apple MacBook Air M2",
+    "description": "Portátil con chip M2, diseño sin ventilador y hasta 18 horas de autonomía.",
+    "category": "Electrónica",
+    "subcategories": [
+      "Portátiles"
+    ],
+    "location": "Madrid",
+    "price": 1449,
+    "popularity": 34,
+    "created_at": "2024-01-07T09:00:00.000Z"
+  },
+  {
+    "id": "smartphone-samsung-galaxy-s24",
+    "name": "Smartphone Samsung Galaxy S24",
+    "description": "Teléfono Android con pantalla AMOLED de 6.2 pulgadas y cámara triple de alta resolución.",
+    "category": "Electrónica",
+    "subcategories": [
+      "Smartphones"
+    ],
+    "location": "Barcelona",
+    "price": 859,
+    "popularity": 63,
+    "created_at": "2025-07-11T09:00:00.000Z"
+  },
+  {
+    "id": "smartphone-apple-iphone-15",
+    "name": "Smartphone Apple iPhone 15",
+    "description": "iPhone con chip A16, cámara principal de 48MP y conector USB-C.",
+    "category": "Electrónica",
+    "subcategories": [
+      "Smartphones"
+    ],
+    "location": "Madrid",
+    "price": 999,
+    "popularity": 93,
+    "created_at": "2024-04-11T09:00:00.000Z"
+  },
+  {
+    "id": "smartphone-xiaomi-redmi-note-13",
+    "name": "Smartphone Xiaomi Redmi Note 13",
+    "description": "Teléfono gama media con batería de 5000 mAh y carga rápida de 33W.",
+    "category": "Electrónica",
+    "subcategories": [
+      "Smartphones"
+    ],
+    "location": "Sevilla",
+    "price": 249.99,
+    "popularity": 31,
+    "created_at": "2025-10-14T09:00:00.000Z"
+  },
+  {
+    "id": "smartphone-google-pixel-8",
+    "name": "Smartphone Google Pixel 8",
+    "description": "Teléfono Android puro con funciones de IA integradas y cámara computacional avanzada.",
+    "category": "Electrónica",
+    "subcategories": [
+      "Smartphones"
+    ],
+    "location": "Valencia",
+    "price": 699,
+    "popularity": 60,
+    "created_at": "2024-07-15T09:00:00.000Z"
+  },
+  {
+    "id": "auriculares-sony-wh1000xm5",
+    "name": "Auriculares Sony WH-1000XM5",
+    "description": "Auriculares inalámbricos con cancelación de ruido líder en su categoría.",
+    "category": "Electrónica",
+    "subcategories": [
+      "Auriculares"
+    ],
+    "location": "Madrid",
+    "price": 379.99,
+    "popularity": 89,
+    "created_at": "2026-01-17T09:00:00.000Z"
+  },
+  {
+    "id": "auriculares-bose-quietcomfort",
+    "name": "Auriculares Bose QuietComfort",
+    "description": "Auriculares over-ear con cancelación de ruido activa y sonido equilibrado.",
+    "category": "Electrónica",
+    "subcategories": [
+      "Auriculares"
+    ],
+    "location": "Barcelona",
+    "price": 329,
+    "popularity": 27,
+    "created_at": "2024-10-18T09:00:00.000Z"
+  },
+  {
+    "id": "auriculares-jbl-tune-510bt",
+    "name": "Auriculares JBL Tune 510BT",
+    "description": "Auriculares inalámbricos económicos con sonido JBL Pure Bass.",
+    "category": "Electrónica",
+    "subcategories": [
+      "Auriculares"
+    ],
+    "location": "Valencia",
+    "price": 39.99,
+    "popularity": 56,
+    "created_at": "2023-07-20T09:00:00.000Z"
+  },
+  {
+    "id": "auriculares-apple-airpods-pro",
+    "name": "Auriculares Apple AirPods Pro",
+    "description": "Auriculares intraurales con cancelación activa de ruido y audio espacial.",
+    "category": "Electrónica",
+    "subcategories": [
+      "Auriculares"
+    ],
+    "location": "Sevilla",
+    "price": 279,
+    "popularity": 86,
+    "created_at": "2025-01-21T09:00:00.000Z"
+  },
+  {
+    "id": "mesa-comedor-roble",
+    "name": "Mesa de Comedor Roble Macizo",
+    "description": "Mesa de comedor extensible fabricada en madera de roble macizo para 6 comensales.",
+    "category": "Hogar y Muebles",
+    "subcategories": [
+      "Mesas"
+    ],
+    "location": "Madrid",
+    "price": 549,
+    "popularity": 24,
+    "created_at": "2023-10-23T09:00:00.000Z"
+  },
+  {
+    "id": "mesa-centro-cristal",
+    "name": "Mesa de Centro de Cristal",
+    "description": "Mesa de centro con tapa de cristal templado y estructura metálica minimalista.",
+    "category": "Hogar y Muebles",
+    "subcategories": [
+      "Mesas"
+    ],
+    "location": "Barcelona",
+    "price": 129.99,
+    "popularity": 53,
+    "created_at": "2025-04-26T09:00:00.000Z"
+  },
+  {
+    "id": "mesa-auxiliar-nordica",
+    "name": "Mesa Auxiliar Nórdica",
+    "description": "Mesa auxiliar de estilo nórdico en madera clara, ideal para salón o dormitorio.",
+    "category": "Hogar y Muebles",
+    "subcategories": [
+      "Mesas"
+    ],
+    "location": "Valencia",
+    "price": 79.9,
+    "popularity": 82,
+    "created_at": "2024-01-26T09:00:00.000Z"
+  },
+  {
+    "id": "mesa-plegable-camping",
+    "name": "Mesa Plegable de Camping",
+    "description": "Mesa plegable ligera de aluminio, perfecta para exteriores y actividades al aire libre.",
+    "category": "Hogar y Muebles",
+    "subcategories": [
+      "Mesas"
+    ],
+    "location": "Sevilla",
+    "price": 34.99,
+    "popularity": 20,
+    "created_at": "2025-07-30T09:00:00.000Z"
+  },
+  {
+    "id": "mesa-escritorio-ajustable",
+    "name": "Mesa de Escritorio Ajustable en Altura",
+    "description": "Escritorio eléctrico ajustable en altura para trabajar sentado o de pie.",
+    "category": "Hogar y Muebles",
+    "subcategories": [
+      "Mesas"
+    ],
+    "location": "Madrid",
+    "price": 399,
+    "popularity": 50,
+    "created_at": "2024-04-30T09:00:00.000Z"
+  },
+  {
+    "id": "silla-oficina-ergonomica",
+    "name": "Silla de Oficina Ergonómica",
+    "description": "Silla ergonómica con soporte lumbar ajustable y reposabrazos 3D.",
+    "category": "Hogar y Muebles",
+    "subcategories": [
+      "Sillas"
+    ],
+    "location": "Barcelona",
+    "price": 219,
+    "popularity": 79,
+    "created_at": "2025-11-02T09:00:00.000Z"
+  },
+  {
+    "id": "silla-comedor-vintage",
+    "name": "Silla de Comedor Vintage",
+    "description": "Silla de comedor tapizada con patas de madera de estilo vintage.",
+    "category": "Hogar y Muebles",
+    "subcategories": [
+      "Sillas"
+    ],
+    "location": "Valencia",
+    "price": 89,
+    "popularity": 17,
+    "created_at": "2024-08-03T09:00:00.000Z"
+  },
+  {
+    "id": "silla-gaming-reclinable",
+    "name": "Silla Gaming Reclinable",
+    "description": "Silla gaming reclinable con reposapiés extraíble y cojines lumbares.",
+    "category": "Hogar y Muebles",
+    "subcategories": [
+      "Sillas"
+    ],
+    "location": "Sevilla",
+    "price": 259.99,
+    "popularity": 46,
+    "created_at": "2026-02-05T09:00:00.000Z"
+  },
+  {
+    "id": "lampara-mesa-tactil",
+    "name": "Lámpara de Mesa Táctil LED",
+    "description": "Lámpara de mesa con control táctil de intensidad y temperatura de color.",
+    "category": "Hogar y Muebles",
+    "subcategories": [
+      "Iluminación"
+    ],
+    "location": "Madrid",
+    "price": 45.5,
+    "popularity": 76,
+    "created_at": "2024-11-06T09:00:00.000Z"
+  },
+  {
+    "id": "lampara-pie-arco",
+    "name": "Lámpara de Pie de Arco",
+    "description": "Lámpara de pie con diseño de arco, ideal para iluminar zonas de lectura.",
+    "category": "Hogar y Muebles",
+    "subcategories": [
+      "Iluminación"
+    ],
+    "location": "Barcelona",
+    "price": 119,
+    "popularity": 13,
+    "created_at": "2023-08-08T09:00:00.000Z"
+  },
+  {
+    "id": "tira-led-inteligente",
+    "name": "Tira LED Inteligente RGB",
+    "description": "Tira LED controlable por app con millones de combinaciones de color.",
+    "category": "Hogar y Muebles",
+    "subcategories": [
+      "Iluminación"
+    ],
+    "location": "Valencia",
+    "price": 24.99,
+    "popularity": 43,
+    "created_at": "2025-02-09T09:00:00.000Z"
+  },
+  {
+    "id": "zapatillas-running-nike-pegasus",
+    "name": "Zapatillas Running Nike Pegasus",
+    "description": "Zapatillas de running con amortiguación reactiva para entrenamientos diarios.",
+    "category": "Deporte y Fitness",
+    "subcategories": [
+      "Running"
+    ],
+    "location": "Madrid",
+    "price": 129.99,
+    "popularity": 72,
+    "created_at": "2023-11-11T09:00:00.000Z"
+  },
+  {
+    "id": "zapatillas-running-adidas-ultraboost",
+    "name": "Zapatillas Running Adidas Ultraboost",
+    "description": "Zapatillas de running con tecnología Boost para máximo retorno de energía.",
+    "category": "Deporte y Fitness",
+    "subcategories": [
+      "Running"
+    ],
+    "location": "Barcelona",
+    "price": 179.99,
+    "popularity": 10,
+    "created_at": "2025-05-15T09:00:00.000Z"
+  },
+  {
+    "id": "zapatillas-running-asics-gel-nimbus",
+    "name": "Zapatillas Running Asics Gel-Nimbus",
+    "description": "Zapatillas neutras con gran amortiguación para largas distancias.",
+    "category": "Deporte y Fitness",
+    "subcategories": [
+      "Running"
+    ],
+    "location": "Valencia",
+    "price": 149,
+    "popularity": 39,
+    "created_at": "2024-02-14T09:00:00.000Z"
+  },
+  {
+    "id": "reloj-gps-running-garmin",
+    "name": "Reloj GPS para Running Garmin",
+    "description": "Reloj deportivo con GPS integrado, monitor de frecuencia cardíaca y métricas avanzadas.",
+    "category": "Deporte y Fitness",
+    "subcategories": [
+      "Running"
+    ],
+    "location": "Sevilla",
+    "price": 349,
+    "popularity": 69,
+    "created_at": "2025-08-18T09:00:00.000Z"
+  },
+  {
+    "id": "bicicleta-montana-btwin",
+    "name": "Bicicleta de Montaña BTwin",
+    "description": "Bicicleta de montaña con suspensión delantera y 21 velocidades.",
+    "category": "Deporte y Fitness",
+    "subcategories": [
+      "Ciclismo"
+    ],
+    "location": "Madrid",
+    "price": 429,
+    "popularity": 98,
+    "created_at": "2024-05-19T09:00:00.000Z"
+  },
+  {
+    "id": "casco-ciclismo-specialized",
+    "name": "Casco de Ciclismo Specialized",
+    "description": "Casco ligero con sistema de ventilación optimizado y ajuste ergonómico.",
+    "category": "Deporte y Fitness",
+    "subcategories": [
+      "Ciclismo"
+    ],
+    "location": "Barcelona",
+    "price": 89.99,
+    "popularity": 36,
+    "created_at": "2025-11-21T09:00:00.000Z"
+  },
+  {
+    "id": "luces-bicicleta-led-set",
+    "name": "Set de Luces LED para Bicicleta",
+    "description": "Set de luces delantera y trasera recargables por USB para ciclismo urbano.",
+    "category": "Deporte y Fitness",
+    "subcategories": [
+      "Ciclismo"
+    ],
+    "location": "Valencia",
+    "price": 19.99,
+    "popularity": 65,
+    "created_at": "2024-08-22T09:00:00.000Z"
+  },
+  {
+    "id": "esterilla-yoga-antideslizante",
+    "name": "Esterilla de Yoga Antideslizante",
+    "description": "Esterilla de yoga de alta densidad con superficie antideslizante.",
+    "category": "Deporte y Fitness",
+    "subcategories": [
+      "Fitness en casa"
+    ],
+    "location": "Sevilla",
+    "price": 24.99,
+    "popularity": 95,
+    "created_at": "2026-02-24T09:00:00.000Z"
+  },
+  {
+    "id": "mancuernas-ajustables-set",
+    "name": "Set de Mancuernas Ajustables",
+    "description": "Set de mancuernas ajustables de 2 a 20 kg para entrenamiento en casa.",
+    "category": "Deporte y Fitness",
+    "subcategories": [
+      "Fitness en casa"
+    ],
+    "location": "Madrid",
+    "price": 159,
+    "popularity": 32,
+    "created_at": "2024-11-25T09:00:00.000Z"
+  },
+  {
+    "id": "banda-elastica-fitness-set",
+    "name": "Set de Bandas Elásticas de Fitness",
+    "description": "Set de bandas elásticas de distintas resistencias para entrenamiento funcional.",
+    "category": "Deporte y Fitness",
+    "subcategories": [
+      "Fitness en casa",
+      "Running"
+    ],
+    "location": "Barcelona",
+    "price": 15.99,
+    "popularity": 62,
+    "created_at": "2023-08-27T09:00:00.000Z"
+  },
+  {
+    "id": "zapatillas-casual-converse-chuck",
+    "name": "Zapatillas Casual Converse Chuck Taylor",
+    "description": "Zapatillas de lona clásicas, atemporales y versátiles para el día a día.",
+    "category": "Moda",
+    "subcategories": [
+      "Calzado"
+    ],
+    "location": "Madrid",
+    "price": 64.99,
+    "popularity": 91,
+    "created_at": "2025-02-28T09:00:00.000Z"
+  },
+  {
+    "id": "zapatillas-skate-vans-old-skool",
+    "name": "Zapatillas Skate Vans Old Skool",
+    "description": "Zapatillas de skate con la icónica franja lateral y suela vulcanizada.",
+    "category": "Moda",
+    "subcategories": [
+      "Calzado"
+    ],
+    "location": "Barcelona",
+    "price": 74.99,
+    "popularity": 29,
+    "created_at": "2023-11-30T09:00:00.000Z"
+  },
+  {
+    "id": "botas-cuero-chelsea",
+    "name": "Botas de Cuero Chelsea",
+    "description": "Botas Chelsea de cuero genuino con elástico lateral y suela de goma.",
+    "category": "Moda",
+    "subcategories": [
+      "Calzado"
+    ],
+    "location": "Valencia",
+    "price": 139,
+    "popularity": 58,
+    "created_at": "2025-06-03T09:00:00.000Z"
+  },
+  {
+    "id": "sandalias-verano-cuero",
+    "name": "Sandalias de Verano de Cuero",
+    "description": "Sandalias planas de cuero, cómodas y transpirables para el verano.",
+    "category": "Moda",
+    "subcategories": [
+      "Calzado"
+    ],
+    "location": "Sevilla",
+    "price": 39.99,
+    "popularity": 88,
+    "created_at": "2024-03-04T09:00:00.000Z"
+  },
+  {
+    "id": "camiseta-running-transpirable",
+    "name": "Camiseta Running Transpirable",
+    "description": "Camiseta técnica de secado rápido con tejido transpirable para correr.",
+    "category": "Moda",
+    "subcategories": [
+      "Ropa Deportiva"
+    ],
+    "location": "Madrid",
+    "price": 22.99,
+    "popularity": 25,
+    "created_at": "2025-09-06T09:00:00.000Z"
+  },
+  {
+    "id": "camiseta-tecnica-manga-larga",
+    "name": "Camiseta Técnica de Manga Larga",
+    "description": "Camiseta térmica de manga larga ideal para entrenar en climas fríos.",
+    "category": "Moda",
+    "subcategories": [
+      "Ropa Deportiva"
+    ],
+    "location": "Barcelona",
+    "price": 27.99,
+    "popularity": 55,
+    "created_at": "2024-06-07T09:00:00.000Z"
+  },
+  {
+    "id": "mallas-deportivas-mujer",
+    "name": "Mallas Deportivas de Mujer",
+    "description": "Mallas deportivas de compresión con cintura alta y tejido elástico.",
+    "category": "Moda",
+    "subcategories": [
+      "Ropa Deportiva"
+    ],
+    "location": "Valencia",
+    "price": 34.99,
+    "popularity": 84,
+    "created_at": "2025-12-10T09:00:00.000Z"
+  },
+  {
+    "id": "sudadera-capucha-deportiva",
+    "name": "Sudadera con Capucha Deportiva",
+    "description": "Sudadera con capucha en algodón perchado, cómoda para antes y después de entrenar.",
+    "category": "Moda",
+    "subcategories": [
+      "Ropa Deportiva"
+    ],
+    "location": "Sevilla",
+    "price": 44.99,
+    "popularity": 22,
+    "created_at": "2024-09-10T09:00:00.000Z"
+  },
+  {
+    "id": "mochila-urbana-antirrobo",
+    "name": "Mochila Urbana Antirrobo",
+    "description": "Mochila urbana con compartimento acolchado para portátil y cierre antirrobo.",
+    "category": "Moda",
+    "subcategories": [
+      "Accesorios"
+    ],
+    "location": "Madrid",
+    "price": 59.99,
+    "popularity": 51,
+    "created_at": "2026-03-15T09:00:00.000Z"
+  },
+  {
+    "id": "gorra-deportiva-ajustable",
+    "name": "Gorra Deportiva Ajustable",
+    "description": "Gorra deportiva transpirable con cierre trasero ajustable.",
+    "category": "Moda",
+    "subcategories": [
+      "Accesorios"
+    ],
+    "location": "Barcelona",
+    "price": 14.99,
+    "popularity": 81,
+    "created_at": "2024-12-14T09:00:00.000Z"
+  },
+  {
+    "id": "cinturon-cuero-clasico",
+    "name": "Cinturón de Cuero Clásico",
+    "description": "Cinturón de cuero genuino con hebilla metálica clásica.",
+    "category": "Moda",
+    "subcategories": [
+      "Accesorios"
+    ],
+    "location": "Valencia",
+    "price": 29.99,
+    "popularity": 18,
+    "created_at": "2023-09-15T09:00:00.000Z"
+  },
+  {
+    "id": "libro-ficcion-el-jardin-secreto",
+    "name": "El Jardín Secreto de las Palabras",
+    "description": "Novela de ficción contemporánea sobre memoria, pérdida y reencuentro.",
+    "category": "Libros",
+    "subcategories": [
+      "Ficción"
+    ],
+    "location": "Madrid",
+    "price": 18.9,
+    "popularity": 48,
+    "created_at": "2025-03-19T09:00:00.000Z"
+  },
+  {
+    "id": "libro-ficcion-la-ultima-estrella",
+    "name": "La Última Estrella del Horizonte",
+    "description": "Novela de ciencia ficción ambientada en una colonia espacial en crisis.",
+    "category": "Libros",
+    "subcategories": [
+      "Ficción"
+    ],
+    "location": "Barcelona",
+    "price": 16.5,
+    "popularity": 77,
+    "created_at": "2023-12-19T09:00:00.000Z"
+  },
+  {
+    "id": "libro-ficcion-sombras-de-medianoche",
+    "name": "Sombras de Medianoche",
+    "description": "Thriller psicológico sobre un detective que persigue un caso sin resolver.",
+    "category": "Libros",
+    "subcategories": [
+      "Ficción"
+    ],
+    "location": "Valencia",
+    "price": 15.99,
+    "popularity": 15,
+    "created_at": "2025-06-22T09:00:00.000Z"
+  },
+  {
+    "id": "libro-noficcion-habitos-diarios",
+    "name": "Guía Práctica de Hábitos Diarios",
+    "description": "Ensayo de no ficción sobre cómo construir hábitos duraderos paso a paso.",
+    "category": "Libros",
+    "subcategories": [
+      "No Ficción"
+    ],
+    "location": "Sevilla",
+    "price": 19.95,
+    "popularity": 44,
+    "created_at": "2024-03-23T09:00:00.000Z"
+  },
+  {
+    "id": "libro-noficcion-historia-economia",
+    "name": "Breve Historia de la Economía Mundial",
+    "description": "Libro de divulgación sobre los grandes hitos de la economía global.",
+    "category": "Libros",
+    "subcategories": [
+      "No Ficción"
+    ],
+    "location": "Madrid",
+    "price": 21.9,
+    "popularity": 74,
+    "created_at": "2025-09-25T09:00:00.000Z"
+  },
+  {
+    "id": "libro-noficcion-cocina-mediterranea",
+    "name": "Recetario de Cocina Mediterránea",
+    "description": "Libro de cocina con recetas tradicionales mediterráneas paso a paso.",
+    "category": "Libros",
+    "subcategories": [
+      "No Ficción"
+    ],
+    "location": "Barcelona",
+    "price": 24.9,
+    "popularity": 11,
+    "created_at": "2024-06-26T09:00:00.000Z"
+  },
+  {
+    "id": "libro-infantil-bosque-encantado",
+    "name": "El Bosque Encantado",
+    "description": "Cuento infantil ilustrado sobre la amistad y la aventura en un bosque mágico.",
+    "category": "Libros",
+    "subcategories": [
+      "Infantil"
+    ],
+    "location": "Valencia",
+    "price": 12.99,
+    "popularity": 41,
+    "created_at": "2025-12-29T09:00:00.000Z"
+  },
+  {
+    "id": "libro-infantil-numeros-y-colores",
+    "name": "Números y Colores para Pequeños",
+    "description": "Libro infantil educativo para aprender números y colores desde temprana edad.",
+    "category": "Libros",
+    "subcategories": [
+      "Infantil"
+    ],
+    "location": "Sevilla",
+    "price": 9.99,
+    "popularity": 70,
+    "created_at": "2024-09-29T09:00:00.000Z"
+  }
+]
