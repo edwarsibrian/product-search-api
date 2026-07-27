@@ -1,0 +1,150 @@
+# CLAUDE.md
+
+Context guide for Claude Code in this repository. Read it in full before touching any code.
+
+## What this project is
+
+NestJS backend API for advanced product search. Origin: a technical challenge for a hiring process, but treated as a **professional portfolio project on GitHub** — technical decisions are made with long-term maintainability and quality in mind, not a submission deadline. There's no artificial time pressure: prioritize doing it well over doing it fast.
+
+Project goal: performance, scalability, and clean code. **No front-end is required.**
+
+A functional, well-documented submission is worth more than total completeness — get the core working end-to-end before covering 100% of the nice-to-haves, but don't trade quality for speed, since this is a public artifact.
+
+## Functional scope
+
+The API must allow searching for products by:
+- Name
+- Category
+- Subcategories
+- Location
+- Price
+
+Mandatory requirements:
+- **Hexagonal architecture** (ports & adapters) — see the architecture section below
+- **Autocomplete** using Elasticsearch + Redis (Redis for cache/speed, Elasticsearch as the source of suggestions)
+- **Relevance-based ranking** of results (not just alphabetical/date order)
+- **Alternative/related query suggestions**: generate suggestions for alternative or related queries, including spelling corrections (fuzzy matching / did-you-mean) and semantically related terms, using Elasticsearch's native capabilities (suggesters, fuzzy queries) over the indexed product information
+- **Filtering & faceting**, combined and individual: categories, subcategories, location, price range
+- **Pagination & multi-option sorting**: by relevance, popularity, created_at
+
+## Hexagonal architecture — folder convention
+
+Follow a feature-based pattern with ports and adapters explicitly separated:
+
+```
+src/
+  <feature>/                    # e.g. product-search/
+    domain/                     # entities, value objects, pure business rules
+    application/                # use cases / application services, ports (interfaces)
+      ports/                    # interfaces the domain needs (ISearchRepository, ICachePort, etc.)
+    infrastructure/              # concrete adapters
+      elasticsearch/             # Elasticsearch adapter implementing the search port
+      redis/                     # Redis adapter implementing the cache port
+    presentation/                # controllers, input/output DTOs, mappers
+data/
+  products.json                  # reproducible seed dataset, outside src/
+```
+
+Rules:
+- `domain/` never imports anything from `infrastructure/` or from NestJS directly.
+- Use cases depend on interfaces (`ports/`), never on concrete implementations — Nest's dependency injection resolves the binding at the module level.
+- `presentation/` DTOs never leak into the domain; use explicit mappers.
+- There is no `infrastructure/persistence/` folder because there's no relational database — see the storage decision below.
+
+## Stack and technical decisions
+
+- **NestJS** as the main framework (TypeScript)
+- **Elasticsearch**: search engine, autocomplete, relevance, faceting/aggregations, **and queryable product storage** (see decision below)
+- **Redis**: cache for autocomplete and frequent results/facets
+
+### Decision: no relational database
+
+The original challenge doesn't mention or require database persistence. Decision made: **no PostgreSQL/MySQL/SQL Server or any RDBMS**. Elasticsearch acts as the sole queryable storage for products — its indexing and search engine more than covers this domain's needs (search, filters, facets, ranking), and adding an RDBMS just for persistence would introduce an unnecessary synchronization layer (DB → index) for the scope of this project.
+
+Direct consequence: there's no `infrastructure/persistence/` with a traditional database repository — the Elasticsearch adapter **is** the repository.
+
+### Dataset and seeding
+
+The API needs real products to search over. Flow:
+- `data/products.json` at the repo root (outside `src/`): reproducible dataset with sample products (name, category, subcategories, location, price, popularity, created_at, and any field needed for ranking/facets).
+- `npm run seed`: a script that must
+  1. Create the Elasticsearch index if it doesn't exist
+  2. Configure the mapping (correct field types: text with an autocomplete analyzer, keyword for facets, numeric range for price, date for created_at)
+  3. Load the products from `products.json` (bulk insert)
+  4. Leave Elasticsearch ready to receive searches
+
+The seed must be idempotent: running it twice must not duplicate documents or fail if the index already exists (recreate it, or use bulk upsert by ID).
+
+### Elasticsearch data persistence (Docker)
+
+Even though the project doesn't use an RDBMS, the data indexed in Elasticsearch **must survive** a container restart or recreation — otherwise `npm run seed` would need to run every time `docker-compose` comes up, which isn't acceptable for a dev environment or for anyone cloning the repo.
+
+- `docker-compose.yml` must declare a **named volume** (e.g. `es-data:`) mounted at Elasticsearch's data path (`/usr/share/elasticsearch/data`).
+- The volume must be declared in the top-level `volumes:` section of the compose file, not as a bind mount to a repo folder (avoids polluting the working directory with container binary files).
+- `docker-compose down` without `-v` must preserve the data; `docker-compose down -v` deletes it intentionally — document this in the README for anyone who wants a clean reset.
+- Redis does **not** need a volume: its role here is cache (autocomplete, frequent results), not source of truth — losing it on restart is acceptable and expected, it rebuilds naturally through normal API usage.
+
+- Input validation with `class-validator` / `class-transformer` on the DTOs
+- Centralized error handling (Nest exception filters), never let raw Elasticsearch/Redis errors reach the client
+
+## Testing and API integrity
+
+The goal of the tests isn't coverage for its own sake, but guaranteeing that the public search endpoints behave correctly as the codebase changes. At minimum:
+
+- **Unit tests**: `application/` use cases with the Elasticsearch/Redis adapters mocked (fake ports) — validate business rules (ranking, query building, facets) without depending on real infrastructure.
+- **E2E tests**: against a real Elasticsearch/Redis instance (spun up in the pipeline, see CI below) — cover at least:
+  - Search by name, category, subcategory, location, and price (individually)
+  - Combined filters (2+ criteria at once) and faceting
+  - Pagination and every sort mode (relevance, popularity, created_at)
+  - Autocomplete / suggestions with an intentional typo (fuzzy matching)
+  - Edge cases: empty search, no results, contradictory filters, out-of-range pagination
+- E2E tests must be able to run against an index seeded with a small, deterministic subset of `products.json` (or a dedicated test fixture), not against random data — assertions need predictable results.
+
+### CI with GitHub Actions
+
+Create `.github/workflows/ci.yml` to run on every push and pull request:
+
+1. Checkout the code and install dependencies (`npm ci`)
+2. Spin up Elasticsearch and Redis as **service containers** for the job (not as an external dependency) so e2e tests run isolated and reproducible
+3. Wait for Elasticsearch to be healthy before continuing (healthcheck, not a fixed `sleep`)
+4. Run `npm run seed` (or the test fixture) against that ephemeral instance
+5. `npm run lint`
+6. `npm run test` (unit)
+7. `npm run test:e2e`
+8. Fail the workflow if any step fails, so a PR with a breaking change shows red before it can be merged
+
+The pipeline must be self-sufficient: anyone opening a PR (including the author, months later) should be able to see if something broke without spinning anything up locally.
+
+## Commands
+
+- `npm run start:dev` — dev server with watch
+- `npm run seed` — creates the index, configures the mapping, and loads `data/products.json` into Elasticsearch
+- `npm run test` — unit tests
+- `npm run test:e2e` — end-to-end tests
+- `npm run lint` — lint (run this before considering any task done)
+- `docker-compose up` — spins up API + Elasticsearch + Redis locally
+
+(Update these commands to match reality once `package.json` is defined — this file must stay in sync with what actually exists in the repo.)
+
+## Required deliverables (non-negotiable)
+
+- [ ] Well-structured Dockerfile + docker-compose.yml (multi-stage build in the Dockerfile; docker-compose only needs API + Elasticsearch + Redis, no database service)
+- [ ] README with installation instructions, how to run the project (including `npm run seed` as a required step before search works), and how to test the API
+- [ ] Postman collection with pre-configured endpoints, exported as `.json` in the repo
+- [ ] Online deployment if feasible (Railway/Render/Fly.io are quick options for an Elasticsearch+Redis stack); otherwise, keep local Docker flawless
+- [ ] `.github/workflows/ci.yml` running lint + unit + e2e on every push/PR, with Elasticsearch and Redis as service containers
+
+## Code conventions
+
+- Strict TypeScript (`strict: true` in `tsconfig.json`)
+- kebab-case filenames, PascalCase classes, following standard Nest convention (`*.controller.ts`, `*.service.ts`, `*.module.ts`)
+- Each Nest module exposes only what other modules need via `exports`
+- Environment variables via `@nestjs/config`, never hardcoded — document all of them in `.env.example`
+- Explicitly handle edge cases: empty search, no results, contradictory filters, out-of-range pagination, Elasticsearch/Redis down (clear fallback or error, no crash), un-seeded index (clear message, not a generic 500)
+
+## What NOT to do
+
+- Don't mix infrastructure logic (Elasticsearch queries, Redis commands) into controllers or the domain
+- Don't commit `.env` with real credentials
+- Don't leave stray `console.log`s — use Nest's Logger
+- Don't introduce an RDBMS "just in case" — the decision to use Elasticsearch alone is deliberate, not a shortcut
