@@ -11,6 +11,25 @@ Beyond the `nest new` scaffold (`src/app.*`, default `README.md`), the following
 
 Still missing: everything else under `product-search/` (domain, application/ports, presentation), `data/products.json`, the `seed` script, `.env.example`, `.github/workflows/ci.yml`, and the Postman collection. Everything below this point describes the target design — don't assume a piece is implemented without checking. Update this section as pieces land.
 
+## `package.json` `overrides` — brace-expansion exception
+
+```json
+"overrides": {
+  "brace-expansion": "^5.0.8",
+  "@eslint/eslintrc": {
+    "minimatch": {
+      "brace-expansion": "^1.1.12"
+    }
+  }
+}
+```
+
+The global override pins `brace-expansion` to `^5.0.8`, patched against **GHSA-mh99-v99m-4gvg / CVE-2026-14257** (unbounded-length expansion → OOM crash). But `@eslint/eslintrc` depends on `minimatch@3.1.5`, which calls `require('brace-expansion')` expecting it to itself be the expand function (the pre-5.x API) — under `brace-expansion@5.x` that `require` instead returns `{ expand, EXPANSION_MAX, EXPANSION_MAX_LENGTH }`, so `expand(pattern)` throws `TypeError: expand is not a function` and `npm run lint` cannot run at all.
+
+The scoped override forces just that one dependency path back to `^1.1.12`, which restores compatibility.
+
+**Known residual risk, accepted deliberately:** `brace-expansion@1.1.12` (currently resolves to `1.1.16`) is patched against the older **GHSA-v6h2-p8h4-qcjw / CVE-2025-5889** (ReDoS), but its advisory range for CVE-2026-14257 is `<=5.0.7` with no stated backport to the 1.x/2.x/3.x/4.x lines — so this specific path (`@eslint/eslintrc > minimatch@3.1.5 > brace-expansion`) remains unpatched against CVE-2026-14257 until upstream backports a fix or `@eslint/eslintrc` moves off `minimatch@3.x`. Treated as low risk here because that `minimatch` instance only ever parses this project's own `eslint.config.mjs` glob patterns at dev/lint time — it never touches external or user-supplied input, and never runs in the production container (the `lint` script isn't part of the `Dockerfile` build). Re-evaluate if `@eslint/eslintrc` is ever exercised against untrusted input.
+
 ## What this project is
 
 NestJS backend API for advanced product search. Origin: a technical challenge for a hiring process, but treated as a **professional portfolio project on GitHub** — technical decisions are made with long-term maintainability and quality in mind, not a submission deadline. There's no artificial time pressure: prioritize doing it well over doing it fast.
