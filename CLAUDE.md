@@ -4,7 +4,12 @@ Context guide for Claude Code in this repository. Read it in full before touchin
 
 ## Current state of the repo
 
-As of now the repo is an unmodified `nest new` scaffold (`src/app.*`, default `README.md`) plus this file. None of the following exist yet: the `product-search/` feature module, `data/products.json`, `docker-compose.yml`, the `seed` script, `.github/workflows/ci.yml`, or a Postman collection. Everything below this point (architecture, dataset, deliverables) describes the target design, not what's implemented — don't assume any of it is present without checking. Update this section as pieces land.
+Beyond the `nest new` scaffold (`src/app.*`, default `README.md`), the following exist:
+- `docker-compose.yml` (API + Elasticsearch 9.4.4 + Redis, named `es-data` volume), `Dockerfile`, `.dockerignore`
+- `src/health/` — a basic health check module/controller, registered in `AppModule`
+- `src/product-search/infrastructure/elasticsearch/product-index.mapping.ts` — the product index's analysis settings and field mappings (autocomplete via edge n-grams with a separate index/search analyzer pair, keyword facets with a normalized sub-field, `scaled_float` price, trigram sub-field for did-you-mean), plus `product-index.constants.ts` (default index name) and a spec guarding the mapping's internal consistency (analyzer/normalizer references, price scaling factor)
+
+Still missing: everything else under `product-search/` (domain, application/ports, presentation), `data/products.json`, the `seed` script, `.env.example`, `.github/workflows/ci.yml`, and the Postman collection. Everything below this point describes the target design — don't assume a piece is implemented without checking. Update this section as pieces land.
 
 ## What this project is
 
