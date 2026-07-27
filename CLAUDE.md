@@ -2,6 +2,10 @@
 
 Context guide for Claude Code in this repository. Read it in full before touching any code.
 
+## Current state of the repo
+
+As of now the repo is an unmodified `nest new` scaffold (`src/app.*`, default `README.md`) plus this file. None of the following exist yet: the `product-search/` feature module, `data/products.json`, `docker-compose.yml`, the `seed` script, `.github/workflows/ci.yml`, or a Postman collection. Everything below this point (architecture, dataset, deliverables) describes the target design, not what's implemented — don't assume any of it is present without checking. Update this section as pieces land.
+
 ## What this project is
 
 NestJS backend API for advanced product search. Origin: a technical challenge for a hiring process, but treated as a **professional portfolio project on GitHub** — technical decisions are made with long-term maintainability and quality in mind, not a submission deadline. There's no artificial time pressure: prioritize doing it well over doing it fast.
@@ -123,6 +127,8 @@ The pipeline must be self-sufficient: anyone opening a PR (including the author,
 - `npm run test:e2e` — end-to-end tests
 - `npm run lint` — lint (run this before considering any task done)
 - `docker-compose up` — spins up API + Elasticsearch + Redis locally
+- `npx jest <path-to-file>.spec.ts` — run a single unit test file (e.g. `npx jest src/product-search/application/search-products.usecase.spec.ts`)
+- `npx jest --config ./test/jest-e2e.json <path-to-file>.e2e-spec.ts` — run a single e2e test file
 
 (Update these commands to match reality once `package.json` is defined — this file must stay in sync with what actually exists in the repo.)
 
