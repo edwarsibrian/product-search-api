@@ -40,7 +40,9 @@ describe('PRODUCT_INDEX_MAPPINGS / PRODUCT_INDEX_SETTINGS', () => {
   const { analyzers, normalizers } = collectReferencedNames(
     PRODUCT_INDEX_MAPPINGS.properties,
   );
-  const definedAnalyzers = Object.keys(PRODUCT_INDEX_SETTINGS.analysis.analyzer);
+  const definedAnalyzers = Object.keys(
+    PRODUCT_INDEX_SETTINGS.analysis.analyzer,
+  );
   const definedNormalizers = Object.keys(
     PRODUCT_INDEX_SETTINGS.analysis.normalizer,
   );
@@ -63,7 +65,8 @@ describe('PRODUCT_INDEX_MAPPINGS / PRODUCT_INDEX_SETTINGS', () => {
   });
 
   it('uses a different search_analyzer than analyzer for name, so search queries do not get exploded into edge n-grams and over-match', () => {
-    const name = PRODUCT_INDEX_MAPPINGS.properties.name as estypes.MappingTextProperty;
+    const name = PRODUCT_INDEX_MAPPINGS.properties
+      .name as estypes.MappingTextProperty;
 
     expect(name.analyzer).toBeDefined();
     expect(name.search_analyzer).toBeDefined();
