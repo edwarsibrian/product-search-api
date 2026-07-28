@@ -1,0 +1,233 @@
+{
+  "info": {
+    "_postman_id": "b3f66262-6aea-46de-a25a-971c440b1865",
+    "name": "Product Search API",
+    "description": "Advanced product search API (NestJS + Elasticsearch) — hexagonal architecture, autocomplete, faceting, relevance ranking. See CLAUDE.md and README.md in the repository for full architecture and endpoint documentation. Requires the API running locally with the product index seeded (`npm run seed`) — see README.md for setup.",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "item": [
+    {
+      "name": "Health",
+      "item": [
+        {
+          "name": "Health check",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/health",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "v1", "health"]
+            },
+            "description": "Confirms the API is up. Returns `{\"status\":\"ok\",\"timestamp\":\"...\"}` with no dependency on Elasticsearch/Redis."
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Search",
+      "item": [
+        {
+          "name": "Basic search (q)",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/products/search?q=laptop",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "v1", "products", "search"],
+              "query": [{ "key": "q", "value": "laptop" }]
+            },
+            "description": "Free-text search over name/description, ranked by relevance. Results carry a non-null `score` since `q` is present."
+          },
+          "response": []
+        },
+        {
+          "name": "Search with typo (did-you-mean)",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/products/search?q=lapto",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "v1", "products", "search"],
+              "query": [{ "key": "q", "value": "lapto" }]
+            },
+            "description": "Misspelled query. The phrase suggester returns `suggestions.didYouMean: [\"laptop\"]` — only corrections that would actually match a real document are suggested."
+          },
+          "response": []
+        },
+        {
+          "name": "Filter by category",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/products/search?category=Electrónica&limit=3",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "v1", "products", "search"],
+              "query": [
+                { "key": "category", "value": "Electrónica" },
+                { "key": "limit", "value": "3" }
+              ]
+            },
+            "description": "Same real example documented in README.md. Demonstrates multi-select faceting: `facets.categories` still lists every category with its true count (13/11/11/10/8), not just the active `Electrónica` selection, so a client can render the other options as togglable filters."
+          },
+          "response": []
+        },
+        {
+          "name": "Combined filters + sort + pagination",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/products/search?category=Electrónica&location=Madrid&minPrice=300&maxPrice=1000&sort=popularity&order=desc&page=1&limit=2",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "v1", "products", "search"],
+              "query": [
+                { "key": "category", "value": "Electrónica" },
+                { "key": "location", "value": "Madrid" },
+                { "key": "minPrice", "value": "300" },
+                { "key": "maxPrice", "value": "1000" },
+                { "key": "sort", "value": "popularity" },
+                { "key": "order", "value": "desc" },
+                { "key": "page", "value": "1" },
+                { "key": "limit", "value": "2" }
+              ]
+            },
+            "description": "Category + location + price range combined with sort=popularity and pagination in a single request, over the seeded dataset's real Electrónica/Madrid products (Sony WH-1000XM5, Lenovo ThinkPad E14, iPhone 15 all fall in this price band)."
+          },
+          "response": []
+        },
+        {
+          "name": "Empty search (full catalog)",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/products/search",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "v1", "products", "search"]
+            },
+            "description": "No `q` and no filters. Returns the full 53-product catalog, paginated. Without `q` there's nothing to score, so `sort=relevance` (the default) falls back to popularity ordering."
+          },
+          "response": []
+        },
+        {
+          "name": "Sort by createdAt",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/products/search?sort=createdAt&order=desc&limit=5",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "v1", "products", "search"],
+              "query": [
+                { "key": "sort", "value": "createdAt" },
+                { "key": "order", "value": "desc" },
+                { "key": "limit", "value": "5" }
+              ]
+            },
+            "description": "Sorts the catalog by `created_at` instead of relevance/popularity — one of the three supported sort modes."
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Autocomplete",
+      "item": [
+        {
+          "name": "Autocomplete basic",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/products/autocomplete?q=lap&limit=5",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "v1", "products", "autocomplete"],
+              "query": [
+                { "key": "q", "value": "lap" },
+                { "key": "limit", "value": "5" }
+              ]
+            },
+            "description": "Same real example documented in README.md. Returns the \"Laptop *\" name-prefix cluster (Asus ZenBook 14, HP Pavilion 15, Dell XPS 13, Lenovo ThinkPad E14, Apple MacBook Air M2)."
+          },
+          "response": []
+        },
+        {
+          "name": "Autocomplete short-circuit",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/products/autocomplete?q=l",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "v1", "products", "autocomplete"],
+              "query": [{ "key": "q", "value": "l" }]
+            },
+            "description": "A 1-character prefix short-circuits to `suggestions: []` without querying Elasticsearch at all."
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Error cases",
+      "item": [
+        {
+          "name": "Unknown query param (400)",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/products/search?categoryyy=x",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "v1", "products", "search"],
+              "query": [{ "key": "categoryyy", "value": "x" }]
+            },
+            "description": "Validation is `whitelist: true, forbidNonWhitelisted: true` — any query param not declared on the DTO is a 400, not silently ignored."
+          },
+          "response": []
+        },
+        {
+          "name": "minPrice > maxPrice (400)",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/products/search?minPrice=100&maxPrice=10",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "v1", "products", "search"],
+              "query": [
+                { "key": "minPrice", "value": "100" },
+                { "key": "maxPrice", "value": "10" }
+              ]
+            },
+            "description": "Same real example documented in README.md. Returns 400 with message \"minPrice (100) cannot be greater than maxPrice (10)\"."
+          },
+          "response": []
+        },
+        {
+          "name": "Pagination window exceeded (400)",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/products/search?page=501&limit=20",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "v1", "products", "search"],
+              "query": [
+                { "key": "page", "value": "501" },
+                { "key": "limit", "value": "20" }
+              ]
+            },
+            "description": "`page`/`limit` combination beyond Elasticsearch's `max_result_window` is rejected with 400 before the query ever reaches Elasticsearch."
+          },
+          "response": []
+        }
+      ]
+    }
+  ]
+}
