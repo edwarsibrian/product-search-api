@@ -20,7 +20,7 @@ Beyond the `nest new` scaffold (`src/app.*`, default `README.md`), the following
 - `src/bootstrap/configure-app.ts` — `configureApp(app)` (the `ValidationPipe` registration), shared between `main.ts` and the e2e test harness so both exercise identical validation behavior
 - `.env.example` — documents `PORT`, `ELASTICSEARCH_NODE`, `ELASTICSEARCH_PRODUCT_INDEX`, `ELASTICSEARCH_REQUEST_TIMEOUT_MS`, `REDIS_HOST`, `REDIS_PORT`, `SEARCH_CACHE_TTL_SECONDS`, `AUTOCOMPLETE_CACHE_TTL_SECONDS`
 - `test/product-search/` — e2e tests against a real Elasticsearch/Redis (`npm run test:e2e`), split by area: `search-by-field`, `search-combined-and-facets`, `search-sort-pagination`, `autocomplete`, `edge-cases` (empty search, zero results, out-of-range page, contradictory filters, pagination window exceeded, unseeded index via an overridden `PRODUCT_INDEX_NAME` provider). All seeded once via Jest `globalSetup`/`globalTeardown` (`test/product-search/support/`) into a dedicated `products-e2e-test` index — never `products` — from a small hand-authored fixture (`support/e2e-products.fixture.ts`, 9 products with independently-ranked price/popularity/date so sort assertions are unambiguous), completely separate from `data/products.json`. Cache TTLs are forced to `0` for the whole e2e run (`support/e2e-env.ts`) so responses can't leak between tests via Redis.
-- `.github/workflows/ci.yml` — runs on every push/PR: checkout → install → Elasticsearch+Redis as service containers (health-checked, no fixed sleep) → `npm run seed` (smoke test of the real seed script, against its own `products` index) → lint → unit → e2e (seeds its own `products-e2e-test` index via the same `globalSetup`)
+- `.github/workflows/ci.yml` — runs on every push/PR: checkout → install → Elasticsearch+Redis as service containers (health-checked, no fixed sleep) → `npm run seed` (smoke test of the real seed script, against its own `products` index) → lint → unit → e2e (seeds its own `products-e2e-test` index via the same `globalSetup`). **Verified against real GitHub Actions runs**, not just locally: the first push failed because the `grep`-based Elasticsearch healthcheck command didn't behave the same way inside the Actions runner's `docker exec` as it did locally; simplified to `curl -sSf '.../_cluster/health?wait_for_status=yellow&timeout=60s'` (commit "fix: simplify Elasticsearch service healthcheck in CI"), after which the workflow passed end-to-end.
 
 Still missing: the Postman collection, the final README, and an online deployment. Everything below this point describes the target design — don't assume a piece is implemented without checking. Update this section as pieces land.
 
@@ -175,11 +175,11 @@ The pipeline must be self-sufficient: anyone opening a PR (including the author,
 
 ## Required deliverables (non-negotiable)
 
-- [ ] Well-structured Dockerfile + docker-compose.yml (multi-stage build in the Dockerfile; docker-compose only needs API + Elasticsearch + Redis, no database service)
+- [x] Well-structured Dockerfile + docker-compose.yml (multi-stage build in the Dockerfile; docker-compose only needs API + Elasticsearch + Redis, no database service)
 - [ ] README with installation instructions, how to run the project (including `npm run seed` as a required step before search works), and how to test the API
 - [ ] Postman collection with pre-configured endpoints, exported as `.json` in the repo
 - [ ] Online deployment if feasible (Railway/Render/Fly.io are quick options for an Elasticsearch+Redis stack); otherwise, keep local Docker flawless
-- [ ] `.github/workflows/ci.yml` running lint + unit + e2e on every push/PR, with Elasticsearch and Redis as service containers
+- [x] `.github/workflows/ci.yml` running lint + unit + e2e on every push/PR, with Elasticsearch and Redis as service containers — verified green on a real GitHub Actions run
 
 ## Code conventions
 
