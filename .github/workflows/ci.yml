@@ -23,10 +23,10 @@ jobs:
           xpack.security.enabled: "false"
           ES_JAVA_OPTS: -Xms512m -Xmx512m
         options: >-
-          --health-cmd "curl -s http://localhost:9200/_cluster/health | grep -q '\"status\":\"green\"\\|\"status\":\"yellow\"'"
+          --health-cmd "curl -sSf 'http://localhost:9200/_cluster/health?wait_for_status=yellow&timeout=60s' >/dev/null"
           --health-interval 10s
-          --health-timeout 5s
-          --health-retries 10
+          --health-timeout 60s
+          --health-retries 6
       redis:
         image: redis:8.8-alpine
         ports:
